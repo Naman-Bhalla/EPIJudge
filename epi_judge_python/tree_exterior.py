@@ -6,8 +6,39 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def exterior_binary_tree(tree):
-    # TODO - you fill in here.
-    return []
+    def get_left_boundary(tree, result):
+        if tree:
+            if tree.left:
+                result.append(tree)
+                get_left_boundary(tree.left, result)
+            elif tree.right:
+                result.append(tree)
+                get_left_boundary(tree.right, result)
+
+    def get_right_boundary(tree, result):
+        if tree:
+            if tree.right:
+                get_right_boundary(tree.right, result)
+                result.append(tree)
+            elif tree.left:
+                get_right_boundary(tree.left, result)
+                result.append(tree)
+
+    def print_leaves_left_to_right(tree, result):
+        if tree:
+            if (not tree.left) and (not tree.right):
+                result.append(tree)
+            print_leaves_left_to_right(tree.left, result)
+            print_leaves_left_to_right(tree.right, result)
+    if not tree:
+        return []
+    result = [tree]
+    get_left_boundary(tree.left, result)
+    print_leaves_left_to_right(tree.left, result)
+    print_leaves_left_to_right(tree.right, result)
+    get_right_boundary(tree.right, result)
+
+    return result
 
 
 def create_output_list(L):

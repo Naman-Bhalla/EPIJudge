@@ -13,22 +13,31 @@ class BinaryTreeNode:
 
 
 def construct_right_sibling(tree):
-    # TODO - you fill in here.
-    return
+    def populate_the_level(start):
+        while start and start.left:
+            start.left.next = start.right
+            start.right.next = start.next and start.next.left
+            start = start.next
+
+    while tree and tree.left:
+        populate_the_level(tree)
+        tree = tree.left
 
 
 def traverse_next(node):
     while node:
         yield node
         node = node.next
-    raise StopIteration
+    # raise StopIteration
+    return
 
 
 def traverse_left(node):
     while node:
         yield node
         node = node.left
-    raise StopIteration
+    # raise StopIteration
+    return
 
 
 def clone_tree(original):
