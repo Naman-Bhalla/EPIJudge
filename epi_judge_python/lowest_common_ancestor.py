@@ -7,8 +7,31 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def lca(tree, node0, node1):
-    # TODO - you fill in here.
-    return None
+    def helper(tree, node0, node1x):
+        left_count, right_count = 0, 0
+
+        if tree.left:
+            left_count, answer = helper(tree.left, node0, node1)
+            if left_count >= 2:
+                return (2, answer)
+        
+        if tree.right:
+            right_count, answer = helper(tree.right, node0, node1)
+            if right_count >= 2:
+                return (2, answer)
+
+        total_count = 0
+        if tree is node0:
+            total_count += 1
+        if tree is node1:
+            total_count += 1
+        total_count += (left_count + right_count)
+
+        if total_count >= 2:
+            return (2, tree)
+        return (total_count, tree)
+
+    return helper(tree, node0, node1)[1]
 
 
 @enable_executor_hook

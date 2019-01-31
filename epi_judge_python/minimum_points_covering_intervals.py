@@ -6,10 +6,26 @@ from test_framework.test_utils import enable_executor_hook
 
 Interval = collections.namedtuple('Interval', ('left', 'right'))
 
+def intervals_sort_method(interval):
+    return interval.right
 
 def find_minimum_visits(intervals):
-    # TODO - you fill in here.
-    return 0
+    if not intervals:
+        return 0
+        
+    intervals.sort(key=intervals_sort_method)
+    n = len(intervals)
+    finish = intervals[0].right
+    i = 0
+    ans = 0
+
+    while i < n:
+        if not intervals[i].left <= finish:
+            ans += 1
+            finish = intervals[i].right
+        i += 1
+
+    return ans + 1
 
 
 @enable_executor_hook

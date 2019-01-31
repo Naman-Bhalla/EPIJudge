@@ -1,9 +1,9 @@
 from test_framework import generic_test
-
+import two_sum
 
 def has_three_sum(A, t):
-    # TODO - you fill in here.
-    return True
+    A.sort()
+    return any(two_sum.has_two_sum(A, t - a) for a in A)
 
 
 if __name__ == '__main__':

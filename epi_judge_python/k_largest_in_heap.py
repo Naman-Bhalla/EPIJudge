@@ -1,9 +1,24 @@
 from test_framework import generic_test, test_utils
-
+import heapq
 
 def k_largest_in_binary_heap(A, k):
-    # TODO - you fill in here.
-    return []
+    if k <= 1:
+        return A[:k]
+    answer = []
+    heap = [(-A[0], 0)]
+    n = len(A)
+    if k > n:
+        return A
+
+    for i in range(k):
+        output, index = heapq.heappop(heap)
+        answer.append(-output)
+        if 2 * index + 1 < n:
+            heapq.heappush(heap, (-A[2 * index + 1], 2 * index + 1))
+        if 2 * index + 2 < n:
+            heapq.heappush(heap, (-A[2 * index + 2], 2 * index + 2))
+
+    return answer
 
 
 if __name__ == '__main__':
